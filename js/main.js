@@ -156,8 +156,9 @@ Next.addEventListener("click",Player);
 
 // creo la  variabile per l'immagine precedente
 let Previous = document.querySelector(".fa-arrow-down");
-Previous.addEventListener("click",Stop);
-Previous.addEventListener("click", function () {
+
+
+function PrevImg () {
   DashItems[index].classList.remove("border");
   DashItems[index].classList.add("opacity");
   //riduco  di uno il valore del index
@@ -176,4 +177,20 @@ Previous.addEventListener("click", function () {
   document.querySelector(".Mainimg img").src = ImgScreen;
   document.querySelector("h3").innerHTML = TitleScreen;
   document.querySelector("p").innerHTML = TextScreen;
-}); 
+}
+
+
+function InterImg() {
+  interval = setInterval(PrevImg, 3000);
+}
+
+function PlayerPrev() {
+  if (Play === 0) {
+    InterImg();
+    Play = 1;
+  } else {
+    Stop();
+    Play = 0;
+  }
+} 
+Previous.addEventListener("click",PlayerPrev);
