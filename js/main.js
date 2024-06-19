@@ -43,6 +43,9 @@ const images = [
   },
 ];
 
+
+
+
 //creiamo la variabile con le immmagini
 
 const image = images.map((element) => element.image);
@@ -59,7 +62,6 @@ let index = 0;
 
 // creo l'immagine
 let ImgBox = (document.getElementById("ImgScreen").innerHTML = `
-
 <img class="view" src=${image[index]}></img>
 <div class="absolute bottom">
 <h3>${title[index]}</h3>
@@ -81,13 +83,13 @@ DashItems[0].classList.add("relative");
 DashItems[4].classList.add("relative");
 
 console.log(DashItems);
-
+ // creo ed inserisco la freccia in su
 const ArrowUp = document.createElement("div");
 ArrowUp.innerHTML = `<i class="fa-solid fa-arrow-up"></i>`;
 ArrowUp.classList.add("absolute", "top");
 console.log(ArrowUp);
 DashItems[0].append(ArrowUp);
-
+// creo ed inserisco la fereccia in giu
 const ArrowDown = document.createElement("div");
 ArrowDown.innerHTML = `<i class="fa-solid fa-arrow-down"></i>`;
 ArrowDown.classList.add("absolute", "bottom");
@@ -97,8 +99,8 @@ DashItems[4].append(ArrowDown);
 // variabile bottone
 let Next = document.querySelector(".fa-arrow-up");
 
-//creo un avento
-Next.addEventListener("click", function () {
+
+function NextImg() {
   DashItems[index].classList.add("opacity");
   DashItems[index].classList.remove("border");
   //aumento indice di 1 per click
@@ -120,10 +122,41 @@ Next.addEventListener("click", function () {
   document.querySelector(".Mainimg img").src = ImgScreen;
   document.querySelector("h3").innerHTML = TitleScreen;
   document.querySelector("p").innerHTML = TextScreen;
-});
+}
+let interval;
+function IntervalImg() {
+  interval=  setInterval(NextImg, 3000);
+}
+function Stop() {
+    clearInterval(interval);
+}
+
+//variabile timeout
+
+ let Play = 0;
+ function Player() {
+    if(Play===0){
+   IntervalImg();
+   Play= 1;
+    }else {
+    Stop();
+    Play=0;
+    }
+    
+ } 
+
+//creo un avento
+Next.addEventListener("click",Player);
+
+
+
+
+
+
 
 // creo la  variabile per l'immagine precedente
 let Previous = document.querySelector(".fa-arrow-down");
+Previous.addEventListener("click",Stop);
 Previous.addEventListener("click", function () {
   DashItems[index].classList.remove("border");
   DashItems[index].classList.add("opacity");
@@ -143,4 +176,4 @@ Previous.addEventListener("click", function () {
   document.querySelector(".Mainimg img").src = ImgScreen;
   document.querySelector("h3").innerHTML = TitleScreen;
   document.querySelector("p").innerHTML = TextScreen;
-});
+}); 
