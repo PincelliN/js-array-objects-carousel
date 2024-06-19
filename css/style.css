@@ -1,4 +1,77 @@
-*{
-    padding: 0;
-    margin: 0;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+/* Caratteristiche contenitore*/
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+/* contenitore dove andremo inserire l'img attraverso js*/
+.Mainimg {
+  position: relative;
+  width: 75%;
+  height: 100%;
+}
+.fa-solid {
+  position: absolute;
+  right: 50%;
+  padding: 3px;
+  background-color:rgba(255, 255, 555, 0.2);
+  border-radius: 50%;
+}
+.fa-arrow-up {
+  top: 0;
+  margin-top: 10px;
+}
+.fa-arrow-down {
+  bottom: 0; 
+  margin-bottom: 10px;
+}
+.Mainimg img{
+    width: 100%;
+    height: 100%;
+    object-fit:fill;
+    
+}
+.relative{
+    position: relative;
+}
+.absolute{
+    position: absolute;
+}
+.bottom{
+    bottom: 0;
+    right:50%;
+}
+.top{
+    top:0;
+    right: 50%;
+}
+/*Contenitore dove  bisognera togliere la classe opacity al comparire del img*/
+.Orderimg {
+  width: 25%;
+  height: 100%;
+}
+.Orderimg > div {
+  height: calc(100% / 5);
+  width: 100%;
+  
+}
+.Orderimg img {
+  width: 100%;
+  height: 100%;
+  
+}
+.opacity {
+  filter: grayscale(100%);
+}
+.border{
+  border: 5px solid blue;
+}
+
+h3,p{
+    color: white;
 }
