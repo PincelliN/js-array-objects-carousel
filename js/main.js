@@ -71,25 +71,33 @@ let ImgBox = (document.getElementById("ImgScreen").innerHTML = `
 
 console.log(ImgBox);
 
+// creo le slide laterali ed inserisco le relative immagini
 for (let i = 0; i < image.length; i++) {
   document.getElementById("DashImg").innerHTML += `
   <div class="opacity" ><img src="${image[i]}" alt="${title[i]}"></div>`;
 }
 const DashItems = document.querySelectorAll("#DashImg div");
 
+//aggiungo le classi che mi servono
 DashItems[index].classList.remove("opacity");
 DashItems[index].classList.add("border");
 DashItems[0].classList.add("relative");
 DashItems[4].classList.add("relative");
 
 console.log(DashItems);
+
+
+
  // creo ed inserisco la freccia in su
 const ArrowUp = document.createElement("div");
 ArrowUp.innerHTML = `<i class="fa-solid fa-arrow-up"></i>`;
 ArrowUp.classList.add("absolute", "top");
 console.log(ArrowUp);
 DashItems[0].append(ArrowUp);
-// creo ed inserisco la fereccia in giu
+
+
+
+// creo ed inserisco la freccia in giù
 const ArrowDown = document.createElement("div");
 ArrowDown.innerHTML = `<i class="fa-solid fa-arrow-down"></i>`;
 ArrowDown.classList.add("absolute", "bottom");
@@ -99,51 +107,60 @@ DashItems[4].append(ArrowDown);
 // variabile bottone
 let Next = document.querySelector(".fa-arrow-up");
 
+                      // funzione per l'immagine successiva
+                      function NextImg() {
+                        DashItems[index].classList.add("opacity");
+                        DashItems[index].classList.remove("border");
+                        //aumento indice di 1 per click
+                        index++;
+                        //detto la condizione ceh se indice è maggiore della lunghezza dell'array il valore risultera 0
 
-function NextImg() {
-  DashItems[index].classList.add("opacity");
-  DashItems[index].classList.remove("border");
-  //aumento indice di 1 per click
-  index++;
-  //detto la condizione ceh se indice è maggiore della lunghezza dell'array il valore risultera 0
+                        if (index >= image.length) {
+                          index = 0;
+                        }
+                        DashItems[index].classList.remove("opacity");
+                        DashItems[index].classList.add("border");
+                        //creo una variabile con il nuove elemento del array
+                        let ImgScreen = image[index];
+                        let TitleScreen = title[index];
+                        let TextScreen = text[index];
 
-  if (index >= image.length) {
-    index = 0;
-  }
-  DashItems[index].classList.remove("opacity");
-  DashItems[index].classList.add("border");
-  //creo una variabile con il nuove elemento del array
-  let ImgScreen = image[index];
-  let TitleScreen = title[index];
-  let TextScreen = text[index];
+                        console.log(index);
+                        //vado a sostituire il vecchio valore scr con quello nuovo
+                        document.querySelector(".Mainimg img").src = ImgScreen;
+                        document.querySelector("h3").innerHTML = TitleScreen;
+                        document.querySelector("p").innerHTML = TextScreen;
+                        }
 
-  console.log(index);
-  //vado a sostituire il vecchio valore scr con quello nuovo
-  document.querySelector(".Mainimg img").src = ImgScreen;
-  document.querySelector("h3").innerHTML = TitleScreen;
-  document.querySelector("p").innerHTML = TextScreen;
-}
-let interval;
-function IntervalImg() {
-  interval=  setInterval(NextImg, 3000);
-}
-function Stop() {
-    clearInterval(interval);
-}
 
-//variabile timeout
 
- let Play = 0;
- function Player() {
-    if(Play===0){
-   IntervalImg();
-   Play= 1;
-    }else {
-    Stop();
-    Play=0;
-    }
-    
- } 
+
+                        //creo una varibile  che mi servira per interrompere l'intervallo
+                        let interval;
+                        function IntervalImg() {
+                          interval=  setInterval(NextImg, 3000);
+                        }
+                        function Stop() {
+                            clearInterval(interval);
+                        }
+
+
+
+
+          //variabile timeout
+          let Play = 0;
+
+          //funzione per determinare le condizioni di innesco
+          function Player() {
+              if(Play===0){
+            IntervalImg();
+            Play= 1;
+              }else {
+              Stop();
+              Play=0;
+              }
+              
+          } 
 
 //creo un avento
 Next.addEventListener("click",Player);
@@ -158,31 +175,32 @@ Next.addEventListener("click",Player);
 let Previous = document.querySelector(".fa-arrow-down");
 
 
-function PrevImg () {
-  DashItems[index].classList.remove("border");
-  DashItems[index].classList.add("opacity");
-  //riduco  di uno il valore del index
-  index--;
-  // se il valore di index va sotto allo 0 lo riporto al valore massimo possibile
+                  function PrevImg () {
+                    DashItems[index].classList.remove("border");
+                    DashItems[index].classList.add("opacity");
+                    //riduco  di uno il valore del index
+                    index--;
+                    // se il valore di index va sotto allo 0 lo riporto al valore massimo possibile
 
-  if (index < 0) {
-    index = image.length - 1;
-  }
-  DashItems[index].classList.add("border");
-  DashItems[index].classList.remove("opacity");
-  let ImgScreen = image[index];
-  let TitleScreen = title[index];
-  let TextScreen = text[index];
-  //vado a sostituire il vecchio valore scr con quello nuovo
-  document.querySelector(".Mainimg img").src = ImgScreen;
-  document.querySelector("h3").innerHTML = TitleScreen;
-  document.querySelector("p").innerHTML = TextScreen;
-}
+                    if (index < 0) {
+                      index = image.length - 1;
+                    }
+                    DashItems[index].classList.add("border");
+                    DashItems[index].classList.remove("opacity");
+                    let ImgScreen = image[index];
+                    let TitleScreen = title[index];
+                    let TextScreen = text[index];
+                    //vado a sostituire il vecchio valore scr con quello nuovo
+                    document.querySelector(".Mainimg img").src = ImgScreen;
+                    document.querySelector("h3").innerHTML = TitleScreen;
+                    document.querySelector("p").innerHTML = TextScreen;
+                  }
 
-
-function InterImg() {
-  interval = setInterval(PrevImg, 3000);
-}
+      //Nuova funzione per indicare l'intervallo nel ciclo inverso
+      //Posso riutilizare la funzione Stop visto che lavora sul valore della variabile
+        function InterImg() {
+          interval = setInterval(PrevImg, 3000);
+        }
 
 function PlayerPrev() {
   if (Play === 0) {
