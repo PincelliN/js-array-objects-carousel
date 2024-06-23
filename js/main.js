@@ -43,38 +43,25 @@ const images = [
   },
 ];
 
-
-
-
-//creiamo la variabile con le immmagini
-
-const image = images.map((element) => element.image);
-console.log(image);
-// creo le variabili per il titolo
-const title = images.map((element) => element.title);
-console.log(title);
-// creo le variabili per il testo
-const text = images.map((element) => element.text);
-console.log(text);
-
 //creo una variabile legata al indice
 let index = 0;
 
+
 // creo l'immagine
 let ImgBox = (document.getElementById("ImgScreen").innerHTML = `
-<img class="view" src=${image[index]}></img>
+<img class="view" src=${images[index].image}></img>
 <div class="absolute bottom">
-<h3>${title[index]}</h3>
-<p>${text[index]}</p>
+<h3>${images[index].title}</h3>
+<p>${images[index].text}</p>
 </div>
 `);
 
 console.log(ImgBox);
 
 // creo le slide laterali ed inserisco le relative immagini
-for (let i = 0; i < image.length; i++) {
+for (let i = 0; i < images.length; i++) {
   document.getElementById("DashImg").innerHTML += `
-  <div class="opacity" ><img src="${image[i]}" alt="${title[i]}"></div>`;
+  <div class="opacity" ><img src="${images[i].image}" alt="${images[i].title}"></div>`;
 }
 const DashItems = document.querySelectorAll("#DashImg div");
 
@@ -107,6 +94,9 @@ DashItems[4].append(ArrowDown);
 // variabile bottone
 let Next = document.querySelector(".fa-arrow-up");
 
+
+
+
                       // funzione per l'immagine successiva
                       function NextImg() {
                         DashItems[index].classList.add("opacity");
@@ -115,15 +105,15 @@ let Next = document.querySelector(".fa-arrow-up");
                         index++;
                         //detto la condizione ceh se indice è maggiore della lunghezza dell'array il valore risultera 0
 
-                        if (index >= image.length) {
+                        if (index >= images.length) {
                           index = 0;
                         }
                         DashItems[index].classList.remove("opacity");
                         DashItems[index].classList.add("border");
                         //creo una variabile con il nuove elemento del array
-                        let ImgScreen = image[index];
-                        let TitleScreen = title[index];
-                        let TextScreen = text[index];
+                        let ImgScreen = images[index].image;
+                        let TitleScreen = images[index].title;
+                        let TextScreen = images[index].text;
 
                         console.log(index);
                         //vado a sostituire il vecchio valore scr con quello nuovo
@@ -183,32 +173,58 @@ let Previous = document.querySelector(".fa-arrow-down");
                     // se il valore di index va sotto allo 0 lo riporto al valore massimo possibile
 
                     if (index < 0) {
-                      index = image.length - 1;
+                      index = images.length - 1;
                     }
                     DashItems[index].classList.add("border");
                     DashItems[index].classList.remove("opacity");
-                    let ImgScreen = image[index];
-                    let TitleScreen = title[index];
-                    let TextScreen = text[index];
+                    let ImgScreen = images[index].image;
+                    let TitleScreen = images[index].title;
+                    let TextScreen = images[index].text;
                     //vado a sostituire il vecchio valore scr con quello nuovo
                     document.querySelector(".Mainimg img").src = ImgScreen;
                     document.querySelector("h3").innerHTML = TitleScreen;
                     document.querySelector("p").innerHTML = TextScreen;
                   }
 
-      //Nuova funzione per indicare l'intervallo nel ciclo inverso
-      //Posso riutilizare la funzione Stop visto che lavora sul valore della variabile
-        function InterImg() {
-          interval = setInterval(PrevImg, 3000);
-        }
+                //Nuova funzione per indicare l'intervallo nel ciclo inverso
+                //Posso riutilizare la funzione Stop visto che lavora sul valore della variabile
+                  function InterImg() {
+                    interval = setInterval(PrevImg, 3000);
+                  }
 
-function PlayerPrev() {
-  if (Play === 0) {
-    InterImg();
-    Play = 1;
-  } else {
-    Stop();
-    Play = 0;
-  }
-} 
+          function PlayerPrev() {
+            if (Play === 0) {
+              InterImg();
+              Play = 1;
+            } else {
+              Stop();
+              Play = 0;
+            }
+          } 
 Previous.addEventListener("click",PlayerPrev);
+
+
+
+
+const SelectionByClick = document.querySelectorAll("#DashImg>div");
+console.log(SelectionByClick);
+for (let i = 0; i < SelectionByClick.length; i++) {
+  const element = SelectionByClick[i];
+ console.log(element.classList);
+  
+  element.addEventListener("click",function() {
+    SelectionByClick.forEach(element => {
+      element.classList.remove("border");
+      element.classList.add("opacity");
+    });
+    
+     DashItems[i].classList.remove("opacity");
+     DashItems[i].classList.add("border");
+    document.querySelector(".Mainimg img").src = images[i].image;
+    document.querySelector("h3").innerHTML = images[i].title;
+    document.querySelector("p").innerHTML = images[i].text;
+    console.log(i);
+     index = i;
+     console.log(index);
+  })
+};
